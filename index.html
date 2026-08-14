@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>龚海军狗王纪念册</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --primary: #E91E63;
+            --primary-light: #F48FB1;
+            --secondary: #6A1B9A;
+            --bg: #FDF2F8;
+            --card: #FFFFFF;
+            --text: #2D3748;
+            --text-light: #718096;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(233,30,99,0.2);
+        }
+        
+        .header-content {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        
+        .tab-bar {
+            display: flex;
+            background: white;
+            position: sticky;
+            top: 72px;
+            z-index: 90;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 14px;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-light);
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .tab.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+        }
+        
+        .page {
+            display: none;
+            padding: 16px;
+            padding-bottom: 80px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 16px 8px;
+            background: linear-gradient(135deg, #FCE4EC, #F3E5F5);
+            border-radius: 12px;
+        }
+        
+        .stat-value {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .btn:active {
+            transform: scale(0.98);
+        }
+        
+        .btn-outline {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            font-size: 15px;
+            margin-bottom: 12px;
+            transition: border-color 0.2s;
+        }
+        
+        .input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .record-item {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        
+        .record-date {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+        
+        .record-content {
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 10px;
+        }
+        
+        .record-image {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .record-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        
+        .action-btn {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-delete {
+            background: #FEE2E2;
+            color: #DC2626;
+        }
+        
+        .btn-edit {
+            background: #E0E7FF;
+            color: #4338CA;
+        }
+        
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background: white;
+            width: 100%;
+            max-width: 420px;
+            border-radius: 20px;
+            padding: 24px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-title {
+            font-size: 19px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--primary);
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        
+        .modal-buttons .btn {
+            flex: 1;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-light);
+        }
+        
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+        
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #E2E8F0;
+            display: flex;
+            height: 65px;
+            z-index: 80;
+        }
+        
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            padding-top: 10px;
+            font-size: 11px;
+            color: var(--text-light);
+            cursor: pointer;
+        }
+        
+        .nav-item.active {
+            color: var(--primary);
+        }
+        
+        .nav-icon {
+            font-size: 22px;
+            margin-bottom: 2px;
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 4px 10px;
+            background: #FCE4EC;
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 12px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background: #F3E5F5;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部 -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="logo">💖 龚海军狗王纪念册</h1>
+            <div class="user-avatar">G</div>
+        </div>
+    </header>
+
+    <!-- 标签栏 -->
+    <div class="tab-bar">
+        <div class="tab active" onclick="switchTab(0)">首页</div>
+        <div class="tab" onclick="switchTab(1)">记录</div>
+        <div class="tab" onclick="switchTab(2)">统计</div>
+        <div class="tab" onclick="switchTab(3)">设置</div>
+    </div>
+
+    <!-- 首页 -->
+    <div id="page-0" class="page active">
+        <div class="card">
+            <h2 style="font-size: 18px; margin-bottom: 16px;">💕 我们的故事</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value" id="days-count">365</div>
+                    <div class="stat-label">相处天数</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="records-count">28</div>
+                    <div class="stat-label">珍贵记录</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="words-count">5,200</div>
+                    <div class="stat-label">暖心话语</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="milestone">80%</div>
+                    <div class="stat-label">进度达成</div>
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <div style="display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 4px;">
+                    <span>下一个目标：1000天</span>
+                    <span id="progress-text">80%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-bar" style="width: 80%;"></div>
+                </div>
+            </div>
+            
+            <button class="btn" onclick="showAddModal()">+ 写下新的回忆</button>
+        </div>
+
+        <div class="card">
+            <h3 style="font-size: 16px; margin-bottom: 14px;">📝 最新记录</h3>
+            <div id="latest-records"></div>
+        </div>
+    </div>
+
+    <!-- 记录页 -->
+    <div id="page-1" class="page">
+        <div style="display: flex; gap: 10px; margin-bottom: 16px;">
+            <input type="text" class="input" id="search-input" placeholder="搜索记录..." style="flex: 1; margin: 0;" oninput="filterRecords()">
+            <button class="btn" style="width: auto; padding: 0 16px;" onclick="showAddModal()">添加</button>
+        </div>
+        
+        <div id="all-records"></div>
+    </div>
+
+    <!-- 统计页 -->
+    <div id="page-2" class="page">
+        <div class="card">
+            <h3 style="font-size: 16px; margin-bottom: 20px;">📊 数据统计</h3>
+            
+            <div style="margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <span>总记录数</span>
+                    <span id="stat-total" style="font-weight: 600;">28 条</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <span>总字数</span>
+                    <span id="stat-words" style="font-weight: 600;">5,200 字</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <span>含图片记录</span>
+                    <span id="stat-images" style="font-weight: 600;">12 条</span>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span>月均记录</span>
+                    <span id="stat-monthly" style="font-weight: 600;">2.3 条</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 style="font-size: 16px; margin-bottom: 16px;">🏷️ 标签分布</h3>
+            <div id="tag-stats"></div>
+        </div>
+
+        <div class="card">
+            <h3 style="font-size: 16px; margin-bottom: 16px;">📅 月度趋势</h3>
+            <div id="monthly-trend"></div>
+        </div>
+    </div>
+
+    <!-- 设置页 -->
+    <div id="page-3" class="page">
+        <div class="card">
+            <h3 style="font-size: 16px; margin-bottom: 16px;">⚙️ 基础设置</h3>
+            
+            <div class="record-item" style="cursor: pointer;" onclick="showSettingModal('name')">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span>站点名称</span>
+                    <span style="color: var(--text-light);">龚海军狗王纪念册 ›</span>
+                </div>
+            </div>
+            
+            <div class="record-item" style="cursor: pointer;" onclick="showSettingModal('date')">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span>起始日期</span>
+                    <span style="color: var(--text-light);">2025-01-01 ›</span>
+                </div>
+            </div>
+            
+            <div class="record-item" style="cursor: pointer;" onclick="showSettingModal('goal')">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span>目标天数</span>
+                    <span style="color: var(--text-light);">1000 天 ›</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 style="font-size: 16px; margin-bottom: 16px;">🛡️ 数据管理</h3>
+            
+            <button class="btn btn-outline" style="margin-bottom: 12px;" onclick="exportData()">导出数据</button>
+            <button class="btn btn-outline" style="color: #DC2626; border-color: #DC2626;" onclick="clearAllData()">清空所有数据</button>
+        </div>
+    </div>
+
+    <!-- 底部导航 -->
+    <div class="footer-nav">
+        <div class="nav-item active" onclick="switchTab(0)">
+            <div class="nav-icon">🏠</div>
+            <div>首页</div>
+        </div>
+        <div class="nav-item" onclick="switchTab(1)">
+            <div class="nav-icon">📝</div>
+            <div>记录</div>
+        </div>
+        <div class="nav-item" onclick="switchTab(2)">
+            <div class="nav-icon">📊</div>
+            <div>统计</div>
+        </div>
+        <div class="nav-item" onclick="switchTab(3)">
+            <div class="nav-icon">⚙️</div>
+            <div>设置</div>
+        </div>
+    </div>
+
+    <!-- 添加/编辑弹窗 -->
+    <div id="add-modal" class="modal">
+        <div class="modal-content">
+            <h3 class="modal-title" id="modal-title">添加新记录</h3>
+            
+            <div class="input-group">
+                <label style="display: block; margin-bottom: 6px; font-weight: 500;">标签</label>
+                <input type="text" class="input" id="record-tags" placeholder="用空格分隔，如：约会 惊喜 日常">
+            </div>
+            
+            <div class="input-group">
+                <label style="display: block; margin-bottom: 6px; font-weight: 500;">内容</label>
+                <textarea class="input textarea" id="record-content" placeholder="写下想说的话..."></textarea>
+            </div>
+            
+            <div class="input-group">
+                <label style="display: block; margin-bottom: 6px; font-weight: 500;">上传图片</label>
+                <input type="file" id="record-image" accept="image/*" onchange="previewImage(event)" style="margin-bottom: 10px;">
+                <div id="image-preview" style="display: none; margin-bottom: 10px;">
+                    <img id="preview-img" style="max-width: 100%; border-radius: 8px;">
+                </div>
+            </div>
+            
+            <div class="modal-buttons">
+                <button class="btn btn-outline" onclick="hideAddModal()">取消</button>
+                <button class="btn" onclick="saveRecord()">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 设置弹窗 -->
+    <div id="setting-modal" class="modal">
+        <div class="modal-content">
+            <h3 class="modal-title" id="setting-modal-title">设置</h3>
+            
+            <div id="setting-modal-body"></div>
+            
+            <div class="modal-buttons">
+                <button class="btn btn-outline" onclick="hideSettingModal()">取消</button>
+                <button class="btn" onclick="saveSetting()">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 删除确认弹窗 -->
+    <div id="delete-modal" class="modal">
+        <div class="modal-content">
+            <h3 class="modal-title">确认删除</h3>
+            <p style="text-align: center; margin-bottom: 20px;">确定要删除这条记录吗？此操作不可恢复。</p>
+            <div class="modal-buttons">
+                <button class="btn btn-outline" onclick="hideDeleteModal()">取消</button>
+                <button class="btn" style="background: linear-gradient(135deg, #DC2626, #B91C1C);" onclick="confirmDelete()">确认删除</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== 数据管理 ====================
+        let records = [];
+        let settings = {
+            name: "龚海军狗王纪念册",
+            startDate: "2025-01-01",
+            goalDays: 1000
+        };
+        let editingId = null;
+        let deletingId = null;
+        let currentSettingType = null;
+        let tempImageData = null;
+
+        // 初始化默认数据
+        function initData() {
+            const savedRecords = localStorage.getItem('ghj_records');
+            const savedSettings = localStorage.getItem('ghj_settings');
+            
+            if (savedRecords) {
+                records = JSON.parse(savedRecords);
+            } else {
+                // 默认示例数据
+                records = [
+                    {
+                        id: 1,
+                        date: "2026-08-15",
+                        tags: ["相遇", "纪念"],
+                        content: "不知不觉已经一起走过这么多天了，每一个瞬间都值得珍藏。",
+                        image: null,
+                        words: 28
+                    },
+                    {
+                        id: 2,
+                        date: "2026-08-10",
+                        tags: ["约会", "开心"],
+                        content: "今天一起去看了电影，吃了好吃的，和你在一起的每一刻都那么美好。",
+                        image: null,
+                        words: 36
+                    }
+                ];
+            }
+            
+            if (savedSettings) {
+                settings = JSON.parse(savedSettings);
+            }
+            
+            calculateStats();
+            renderAll();
+        }
+
+        function saveRecords() {
+            localStorage.setItem('ghj_records', JSON.stringify(records));
+            calculateStats();
+            renderAll();
+        }
+
+        function saveSettings() {
+            localStorage.setItem('ghj_settings', JSON.stringify(settings));
+            calculateStats();
+            renderAll();
+        }
+
+        // ==================== 计算逻辑 ====================
+        let stats = {};
+
+        function calculateStats() {
+            const start = new Date(settings.startDate);
+            const today = new Date();
+            const days = Math.ceil((today - start) / (1000 * 60 * 60 * 24)) + 1;
+            
+            const totalWords = records.reduce((sum, r) => sum + r.words, 0);
+            const imageCount = records.filter(r => r.image).length;
+            const progress = Math.min(100, Math.round((days / settings.goalDays) * 100));
+            
+            // 标签统计
+            const tagCount = {};
+            records.forEach(r => {
+                r.tags.forEach(tag => {
+                    tagCount[tag] = (tagCount[tag] || 0) + 1;
+                });
+            });
+            
+            // 月度统计
+            const monthCount = {};
+            records.forEach(r => {
+                const month = r.date.substring(0, 7);
+                monthCount[month] = (monthCount[month] || 0) + 1;
+            });
+            
+            stats = {
+                days,
+                totalRecords: records.length,
+                totalWords,
+                imageCount,
+                progress,
+                tagCount,
+                monthCount,
+                monthlyAvg: (records.length / Math.max(1, (days / 30))).toFixed(1)
+            };
+        }
+
+        // ==================== 渲染 ====================
+        function renderAll() {
+            renderHome();
+            renderRecords();
+            renderStats();
+        }
+
+        function renderHome() {
+            document.getElementById('days-count').textContent = stats.days;
+            document.getElementById('records-count').textContent = stats.totalRecords;
+            document.getElementById('words-count').textContent = stats.totalWords.toLocaleString();
+            document.getElementById('milestone').textContent = stats.progress + '%';
+            document.getElementById('progress-text').textContent = stats.progress + '%';
+            document.getElementById('progress-bar').style.width = stats.progress + '%';
+            
+            const latest = records.slice(-3).reverse();
+            const container = document.getElementById('latest-records');
+            
+            if (latest.length === 0) {
+                container.innerHTML = `<div class="empty-state"><div class="empty-icon">📝</div><div>还没有记录，写下第一条吧~</div></div>`;
+                return;
+            }
+            
+            container.innerHTML = latest.map(r => `
+                <div class="record-item" style="margin-bottom: 10px;">
+                    <div class="record-date">${r.date}</div>
+                    <div>${r.content.substring(0, 30)}${r.content.length > 30 ? '...' : ''}</div>
+                </div>
+            `).join('');
+        }
+
+        function renderRecords(filter = '') {
+            const container = document.getElementById('all-records');
+            let filtered = records;
+            
+            if (filter) {
+                const keyword = filter.toLowerCase();
+                filtered = records.filter(r => 
+                    r.content.toLowerCase().includes(keyword) ||
+                    r.tags.some(t => t.toLowerCase().includes(keyword))
+                );
+            }
+            
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="empty-state"><div class="empty-icon">🔍</div><div>没有找到相关记录</div></div>`;
+                return;
+            }
+            
+            container.innerHTML = filtered.slice().reverse().map(r => `
+                <div class="record-item">
+                    <div class="record-date">${r.date}</div>
+                    <div>${r.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+                    <div class="record-content">${r.content}</div>
+                    ${r.image ? `<img src="${r.image}" class="record-image">` : ''}
+                    <div class="record-actions">
+                        <button class="action-btn btn-edit" onclick="editRecord(${r.id})">编辑</button>
+                        <button class="action-btn btn-delete" onclick="showDeleteModal(${r.id})">删除</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderStats() {
+            document.getElementById('stat-total').textContent = stats.totalRecords + ' 条';
+            document.getElementById('stat-words').textContent = stats.totalWords.toLocaleString() + ' 字';
+            document.getElementById('stat-images').textContent = stats.imageCount + ' 条';
+            document.getElementById('stat-monthly').textContent = stats.monthlyAvg + ' 条';
+            
+            // 标签统计
+            const tagContainer = document.getElementById('tag-stats');
+            const sortedTags = Object.entries(stats.tagCount).sort((a, b) => b[1] - a[1]);
+            
+            if (sortedTags.length === 0) {
+                tagContainer.innerHTML = '<div style="color: var(--text-light);">暂无标签数据</div>';
+            } else {
+                tagContainer.innerHTML = sortedTags.map(([tag, count]) => `
+                    <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #F3E5F5;">
+                        <span>${tag}</span>
+                        <span style="font-weight: 600; color: var(--primary);">${count} 次</span>
+                    </div>
+                `).join('');
+            }
+            
+            // 月度趋势
+            const monthContainer = document.getElementById('monthly-trend');
+            const sortedMonths = Object.entries(stats.monthCount).sort((a, b) => a[0].localeCompare(b[0]));
+            
+            if (sortedMonths.length === 0) {
+                monthContainer.innerHTML = '<div style="color: var(--text-light);">暂无月度数据</div>';
+            } else {
+                monthContainer.innerHTML = sortedMonths.map(([month, count]) => `
+                    <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #F3E5F5;">
+                        <span>${month}</span>
+                        <span style="font-weight: 600;">${count} 条</span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // ==================== 交互操作 ====================
+        function switchTab(index) {
+            document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+            document.getElementById(`page-${index}`).classList.add("active");
+            
+            document.querySelectorAll(".tab").forEach((t, i) => t.classList.toggle("active", i === index));
+            document.querySelectorAll(".nav-item").forEach((n, i) => n.classList.toggle("active", i === index));
+        }
+
+        function showAddModal() {
+            editingId = null;
+            tempImageData = null;
+            document.getElementById('modal-title').textContent = '添加新记录';
+            document.getElementById('record-tags').value = '';
+            document.getElementById('record-content').value = '';
+            document.getElementById('image-preview').style.display = 'none';
+            document.getElementById('add-modal').style.display = 'flex';
+        }
+
+        function hideAddModal() {
+            document.getElementById('add-modal').style.display = 'none';
+            editingId = null;
+            tempImageData = null;
+        }
+
+        function editRecord(id) {
+            const record = records.find(r => r.id === id);
+            if (!record) return;
+            
+            editingId = id;
+            tempImageData = record.image;
+            document.getElementById('modal-title').textContent = '编辑记录';
+            document.getElementById('record-tags').value = record.tags.join(' ');
+            document.getElementById('record-content').value = record.content;
+            
+            if (record.image) {
+                document.getElementById('preview-img').src = record.image;
+                document.getElementById('image-preview').style.display = 'block';
+            } else {
+                document.getElementById('image-preview').style.display = 'none';
+            }
+            
+            document.getElementById('add-modal').style.display = 'flex';
+        }
+
+        function saveRecord() {
+            const tagsInput = document.getElementById('record-tags').value.trim();
+            const content = document.getElementById('record-content').value.trim();
+            
+            if (!content) {
+                alert('请输入内容');
+                return;
+            }
+            
+            const tags = tagsInput ? tagsInput.split(/\s+/).filter(t => t) : ['日常'];
+            const words = content.length;
+            
+            if (editingId) {
+                // 更新
+                const index = records.findIndex(r => r.id === editingId);
+                if (index !== -1) {
+                    records[index] = {
+                        ...records[index],
+                        tags,
+                        content,
+                        words,
+                        image: tempImageData
+                    };
+                }
+            } else {
+                // 新增
+                const newRecord = {
+                    id: Date.now(),
+                    date: new Date().toISOString().substring(0, 10),
+                    tags,
+                    content,
+                    words,
+                    image: tempImageData
+                };
+                records.push(newRecord);
+            }
+            
+            saveRecords();
+            hideAddModal();
+        }
+
+        function showDeleteModal(id) {
+            deletingId = id;
+            document.getElementById('delete-modal').style.display = 'flex';
+        }
+
+        function hideDeleteModal() {
+            document.getElementById('delete-modal').style.display = 'none';
+            deletingId = null;
+        }
+
+        function confirmDelete() {
+            records = records.filter(r => r.id !== deletingId);
+            saveRecords();
+            hideDeleteModal();
+        }
+
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                tempImageData = e.target.result;
+                document.getElementById('preview-img').src = tempImageData;
+                document.getElementById('image-preview').style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function filterRecords() {
+            const keyword = document.getElementById('search-input').value;
+            renderRecords(keyword);
+        }
+
+        // 设置相关
+        function showSettingModal(type) {
+            currentSettingType = type;
+            let title = '', body = '';
+            
+            switch(type) {
+                case 'name':
+                    title = '站点名称设置';
+                    body = `<input type="text" class="input" id="setting-input" value="${settings.name}">`;
+                    break;
+                case 'date':
+                    title = '起始日期';
+                    body = `<input type="date" class="input" id="setting-input" value="${settings.startDate}">`;
+                    break;
+                case 'goal':
+                    title = '目标天数';
+                    body = `<input type="number" class="input" id="setting-input" value="${settings.goalDays}">`;
+                    break;
+            }
+            
+            document.getElementById('setting-modal-title').textContent = title;
+            document.getElementById('setting-modal-body').innerHTML = body;
+            document.getElementById('setting-modal').style.display = 'flex';
+        }
+
+        function hideSettingModal() {
+            document.getElementById('setting-modal').style.display = 'none';
+            currentSettingType = null;
+        }
+
+        function saveSetting() {
+            const value = document.getElementById('setting-input').value;
+            
+            switch(currentSettingType) {
+                case 'name':
+                    settings.name = value;
+                    break;
+                case 'date':
+                    settings.startDate = value;
+                    break;
+                case 'goal':
+                    settings.goalDays = parseInt(value) || 1000;
+                    break;
+            }
+            
+            saveSettings();
+            hideSettingModal();
+        }
+
+        function exportData() {
+            const data = { settings, records, stats };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${settings.name}_${new Date().toISOString().substring(0, 10)}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            alert('数据导出成功！');
+        }
+
+        function clearAllData() {
+            if (confirm('确定要清空所有数据吗？此操作不可恢复！')) {
+                localStorage.removeItem('ghj_records');
+                localStorage.removeItem('ghj_settings');
+                records = [];
+                settings = { name: "龚海军狗王纪念册", startDate: "2025-01-01", goalDays: 1000 };
+                calculateStats();
+                renderAll();
+                alert('数据已清空');
+            }
+        }
+
+        // 初始化
+        window.onload = initData;
+    </script>
+</body>
+</html>
