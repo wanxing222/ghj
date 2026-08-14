@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>龚海军狗王纪念册</title>
+    <title>龚海军狗王纪念站</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
         
@@ -58,9 +58,7 @@
             height: 40px;
             border-radius: 50%;
             background: rgba(255,255,255,0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             font-size: 20px;
         }
         
@@ -335,13 +333,21 @@
             border-radius: 5px;
             transition: width 0.5s ease;
         }
+        
+        .error-text {
+            color: #DC2626;
+            font-size: 14px;
+            margin-top: 8px;
+            display: none;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <!-- 顶部 -->
     <header class="header">
         <div class="header-content">
-            <h1 class="logo">💖 龚海军狗王纪念册</h1>
+            <h1 class="logo">💖 龚海军狗王纪念站</h1>
             <div class="user-avatar">G</div>
         </div>
     </header>
@@ -447,21 +453,21 @@
         <div class="card">
             <h3 style="font-size: 16px; margin-bottom: 16px;">⚙️ 基础设置</h3>
             
-            <div class="record-item" style="cursor: pointer;" onclick="showSettingModal('name')">
+            <div class="record-item" style="cursor: pointer;" onclick="checkAuthAndDo(() => showSettingModal('name'))">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <span>站点名称</span>
-                    <span style="color: var(--text-light);">龚海军狗王纪念册 ›</span>
+                    <span style="color: var(--text-light);">龚海军狗王纪念站 ›</span>
                 </div>
             </div>
             
-            <div class="record-item" style="cursor: pointer;" onclick="showSettingModal('date')">
+            <div class="record-item" style="cursor: pointer;" onclick="checkAuthAndDo(() => showSettingModal('date'))">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <span>起始日期</span>
                     <span style="color: var(--text-light);">2025-01-01 ›</span>
                 </div>
             </div>
             
-            <div class="record-item" style="cursor: pointer;" onclick="showSettingModal('goal')">
+            <div class="record-item" style="cursor: pointer;" onclick="checkAuthAndDo(() => showSettingModal('goal'))">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <span>目标天数</span>
                     <span style="color: var(--text-light);">1000 天 ›</span>
@@ -473,7 +479,7 @@
             <h3 style="font-size: 16px; margin-bottom: 16px;">🛡️ 数据管理</h3>
             
             <button class="btn btn-outline" style="margin-bottom: 12px;" onclick="exportData()">导出数据</button>
-            <button class="btn btn-outline" style="color: #DC2626; border-color: #DC2626;" onclick="clearAllData()">清空所有数据</button>
+            <button class="btn btn-outline" style="color: #DC2626; border-color: #DC2626;" onclick="checkAuthAndDo(clearAllData)">清空所有数据</button>
         </div>
     </div>
 
@@ -494,6 +500,25 @@
         <div class="nav-item" onclick="switchTab(3)">
             <div class="nav-icon">⚙️</div>
             <div>设置</div>
+        </div>
+    </div>
+
+    <!-- 密码验证弹窗 -->
+    <div id="password-modal" class="modal">
+        <div class="modal-content">
+            <h3 class="modal-title">🔐 权限验证</h3>
+            <p style="text-align: center; margin-bottom: 16px; color: var(--text-light);">请输入编辑密码以继续操作</p>
+            
+            <div class="input-group">
+                <input type="password" class="input" id="password-input" placeholder="请输入密码">
+            </div>
+            
+            <div id="password-error" class="error-text">密码错误，请重试</div>
+            
+            <div class="modal-buttons">
+                <button class="btn btn-outline" onclick="hidePasswordModal()">取消</button>
+                <button class="btn" onclick="verifyPassword()">确认</button>
+            </div>
         </div>
     </div>
 
@@ -554,10 +579,15 @@
     </div>
 
     <script>
+        // ==================== 配置与权限 ====================
+        const EDIT_PASSWORD = "wxcf888";
+        let isAuthenticated = false;
+        let pendingAction = null;
+
         // ==================== 数据管理 ====================
         let records = [];
         let settings = {
-            name: "龚海军狗王纪念册",
+            name: "龚海军狗王纪念站",
             startDate: "2025-01-01",
             goalDays: 1000
         };
@@ -574,7 +604,6 @@
             if (savedRecords) {
                 records = JSON.parse(savedRecords);
             } else {
-                // 默认示例数据
                 records = [
                     {
                         id: 1,
@@ -627,7 +656,6 @@
             const imageCount = records.filter(r => r.image).length;
             const progress = Math.min(100, Math.round((days / settings.goalDays) * 100));
             
-            // 标签统计
             const tagCount = {};
             records.forEach(r => {
                 r.tags.forEach(tag => {
@@ -635,7 +663,6 @@
                 });
             });
             
-            // 月度统计
             const monthCount = {};
             records.forEach(r => {
                 const month = r.date.substring(0, 7);
@@ -709,8 +736,8 @@
                     <div class="record-content">${r.content}</div>
                     ${r.image ? `<img src="${r.image}" class="record-image">` : ''}
                     <div class="record-actions">
-                        <button class="action-btn btn-edit" onclick="editRecord(${r.id})">编辑</button>
-                        <button class="action-btn btn-delete" onclick="showDeleteModal(${r.id})">删除</button>
+                        <button class="action-btn btn-edit" onclick="checkAuthAndDo(() => editRecord(${r.id}))">编辑</button>
+                        <button class="action-btn btn-delete" onclick="checkAuthAndDo(() => showDeleteModal(${r.id}))">删除</button>
                     </div>
                 </div>
             `).join('');
@@ -722,7 +749,6 @@
             document.getElementById('stat-images').textContent = stats.imageCount + ' 条';
             document.getElementById('stat-monthly').textContent = stats.monthlyAvg + ' 条';
             
-            // 标签统计
             const tagContainer = document.getElementById('tag-stats');
             const sortedTags = Object.entries(stats.tagCount).sort((a, b) => b[1] - a[1]);
             
@@ -737,7 +763,6 @@
                 `).join('');
             }
             
-            // 月度趋势
             const monthContainer = document.getElementById('monthly-trend');
             const sortedMonths = Object.entries(stats.monthCount).sort((a, b) => a[0].localeCompare(b[0]));
             
@@ -750,6 +775,41 @@
                         <span style="font-weight: 600;">${count} 条</span>
                     </div>
                 `).join('');
+            }
+        }
+
+        // ==================== 权限验证 ====================
+        function checkAuthAndDo(action) {
+            if (isAuthenticated) {
+                action();
+            } else {
+                pendingAction = action;
+                showPasswordModal();
+            }
+        }
+
+        function showPasswordModal() {
+            document.getElementById('password-input').value = '';
+            document.getElementById('password-error').style.display = 'none';
+            document.getElementById('password-modal').style.display = 'flex';
+        }
+
+        function hidePasswordModal() {
+            document.getElementById('password-modal').style.display = 'none';
+            pendingAction = null;
+        }
+
+        function verifyPassword() {
+            const input = document.getElementById('password-input').value;
+            if (input === EDIT_PASSWORD) {
+                isAuthenticated = true;
+                hidePasswordModal();
+                if (pendingAction) {
+                    pendingAction();
+                    pendingAction = null;
+                }
+            } else {
+                document.getElementById('password-error').style.display = 'block';
             }
         }
 
@@ -811,7 +871,6 @@
             const words = content.length;
             
             if (editingId) {
-                // 更新
                 const index = records.findIndex(r => r.id === editingId);
                 if (index !== -1) {
                     records[index] = {
@@ -823,7 +882,6 @@
                     };
                 }
             } else {
-                // 新增
                 const newRecord = {
                     id: Date.now(),
                     date: new Date().toISOString().substring(0, 10),
@@ -939,7 +997,8 @@
                 localStorage.removeItem('ghj_records');
                 localStorage.removeItem('ghj_settings');
                 records = [];
-                settings = { name: "龚海军狗王纪念册", startDate: "2025-01-01", goalDays: 1000 };
+                settings = { name: "龚海军狗王纪念站", startDate: "2025-01-01", goalDays: 1000 };
+                isAuthenticated = false;
                 calculateStats();
                 renderAll();
                 alert('数据已清空');
