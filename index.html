@@ -3,1010 +3,491 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>龚海军狗王纪念站</title>
+    <title>万兴海内外电话卡商城</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Microsoft YaHei", sans-serif; }
         :root {
-            --primary: #E91E63;
-            --primary-light: #F48FB1;
-            --secondary: #6A1B9A;
-            --bg: #FDF2F8;
-            --card: #FFFFFF;
-            --text: #2D3748;
-            --text-light: #718096;
+            --bg-dark: #0F2B3D;
+            --bg-card: #FFFFFF;
+            --primary: #00B597;
+            --secondary: #0A3D62;
+            --text-dark: #1A1A1A;
+            --text-light: #666666;
+            --red: #F44336;
+            --orange: #FF9800;
+            --green: #4CAF50;
+            --blue: #2196F3;
         }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Noto Sans SC', system-ui, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        body { background: #F5F5F5; color: var(--text-dark); padding-bottom: 80px; }
+        .page { display: none; }
+        .page.active { display: block; }
+
+        /* 顶部导航 */
+        .header { background: var(--bg-dark); color: white; padding: 15px; text-align: center; font-size: 20px; font-weight: bold; position: sticky; top: 0; z-index: 99; }
+        .sub-header { background: linear-gradient(135deg, #0A3D62, #0F2B3D); color: white; padding: 20px 15px; }
+        .sub-header h1 { font-size: 28px; margin-bottom: 10px; }
+        .sub-header p { opacity: 0.8; margin-bottom: 15px; }
+        .tags { display: flex; gap: 10px; flex-wrap: wrap; }
+        .tag { background: rgba(255,255,255,0.2); padding: 6px 16px; border-radius: 20px; font-size: 14px; }
+
+        /* 横幅 */
+        .banner { background: linear-gradient(135deg, #B2EBF2, #80DEEA); padding: 25px 15px; text-align: center; }
+        .banner h2 { font-size: 26px; color: #E65100; margin-bottom: 10px; }
+        .banner p { color: #006064; font-size: 15px; }
+
+        /* 公告 */
+        .notice-bar { background: #E0F2F1; padding: 12px 15px; display: flex; align-items: center; gap: 8px; color: #00695C; }
+        .notice-text { flex: 1; }
+
+        /* 分类标题 */
+        .category-title {
+            background: var(--bg-dark);
             color: white;
-            padding: 20px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 4px 12px rgba(233,30,99,0.2);
+            padding: 12px 15px;
+            font-size: 17px;
+            font-weight: bold;
+            border-radius: 10px 10px 0 0;
+            margin: 15px 10px 0;
         }
-        
-        .header-content {
-            max-width: 600px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .logo {
-            font-size: 22px;
-            font-weight: 700;
-        }
-        
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.3);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 20px;
-        }
-        
-        .tab-bar {
-            display: flex;
-            background: white;
-            position: sticky;
-            top: 72px;
-            z-index: 90;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-        }
-        
-        .tab {
-            flex: 1;
-            padding: 14px;
-            text-align: center;
-            font-size: 15px;
-            font-weight: 500;
-            color: var(--text-light);
-            border-bottom: 3px solid transparent;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .tab.active {
-            color: var(--primary);
-            border-bottom: 3px solid var(--primary);
-        }
-        
-        .page {
-            display: none;
-            padding: 16px;
-            padding-bottom: 80px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .page.active {
-            display: block;
-        }
-        
-        .card {
-            background: white;
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 16px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-        
-        .stat-item {
-            text-align: center;
-            padding: 16px 8px;
-            background: linear-gradient(135deg, #FCE4EC, #F3E5F5);
-            border-radius: 12px;
-        }
-        
-        .stat-value {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--primary);
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            color: var(--text-light);
-            margin-top: 4px;
-        }
-        
-        .btn {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        
-        .btn:active {
-            transform: scale(0.98);
-        }
-        
-        .btn-outline {
-            background: white;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-        }
-        
-        .input {
-            width: 100%;
-            padding: 12px 14px;
-            border: 2px solid #E2E8F0;
-            border-radius: 10px;
-            font-size: 15px;
-            margin-bottom: 12px;
-            transition: border-color 0.2s;
-        }
-        
-        .input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-        
-        .textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-        
-        .record-item {
-            background: white;
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 12px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-            position: relative;
-        }
-        
-        .record-date {
-            font-size: 13px;
-            color: var(--text-light);
-            margin-bottom: 8px;
-        }
-        
-        .record-content {
-            font-size: 15px;
-            line-height: 1.7;
-            margin-bottom: 10px;
-        }
-        
-        .record-image {
-            max-width: 100%;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-        
-        .record-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 8px;
-        }
-        
-        .action-btn {
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 13px;
-            border: none;
-            cursor: pointer;
-        }
-        
-        .btn-delete {
-            background: #FEE2E2;
-            color: #DC2626;
-        }
-        
-        .btn-edit {
-            background: #E0E7FF;
-            color: #4338CA;
-        }
-        
-        .modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.6);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 200;
-            padding: 20px;
-        }
-        
-        .modal-content {
-            background: white;
-            width: 100%;
-            max-width: 420px;
-            border-radius: 20px;
-            padding: 24px;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-        
-        .modal-title {
-            font-size: 19px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            text-align: center;
-            color: var(--primary);
-        }
-        
-        .modal-buttons {
-            display: flex;
-            gap: 12px;
-            margin-top: 16px;
-        }
-        
-        .modal-buttons .btn {
-            flex: 1;
-        }
-        
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--text-light);
-        }
-        
-        .empty-icon {
-            font-size: 48px;
-            margin-bottom: 12px;
-        }
-        
-        .footer-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            border-top: 1px solid #E2E8F0;
-            display: flex;
-            height: 65px;
-            z-index: 80;
-        }
-        
-        .nav-item {
-            flex: 1;
-            text-align: center;
-            padding-top: 10px;
-            font-size: 11px;
-            color: var(--text-light);
-            cursor: pointer;
-        }
-        
-        .nav-item.active {
-            color: var(--primary);
-        }
-        
-        .nav-icon {
-            font-size: 22px;
-            margin-bottom: 2px;
-        }
-        
-        .tag {
-            display: inline-block;
-            padding: 4px 10px;
-            background: #FCE4EC;
-            color: var(--primary);
-            border-radius: 20px;
-            font-size: 12px;
-            margin-right: 8px;
-            margin-bottom: 8px;
-        }
-        
-        .progress-bar {
-            height: 10px;
-            background: #F3E5F5;
-            border-radius: 5px;
-            overflow: hidden;
-            margin-top: 8px;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            border-radius: 5px;
-            transition: width 0.5s ease;
-        }
-        
-        .error-text {
-            color: #DC2626;
-            font-size: 14px;
-            margin-top: 8px;
-            display: none;
-            text-align: center;
-        }
+
+        /* 商品网格 */
+        .goods-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 10px; background: white; margin: 0 10px 15px; border-radius: 0 0 10px 10px; }
+        .goods-card { background: white; border-radius: 8px; overflow: hidden; border: 1px solid #EEE; }
+        .goods-img { width: 100%; height: 110px; object-fit: cover; background: #F5F5F5; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #999; }
+        .goods-info { padding: 8px; }
+        .goods-name { font-size: 13px; margin-bottom: 6px; line-height: 1.4; min-height: 36px; }
+        .goods-meta { display: flex; gap: 4px; margin-bottom: 8px; flex-wrap: wrap; }
+        .stock { background: #E3F2FD; color: #1565C0; padding: 2px 5px; border-radius: 4px; font-size: 11px; }
+        .sold { background: #E8F5E9; color: #2E7D32; padding: 2px 5px; border-radius: 4px; font-size: 11px; }
+        .goods-bottom { display: flex; justify-content: space-between; align-items: center; }
+        .price { color: var(--red); font-size: 16px; font-weight: bold; }
+        .buy-btn { background: var(--primary); color: white; border: none; padding: 5px 8px; border-radius: 4px; cursor: pointer; font-size: 13px; }
+
+        /* 商品详情页 */
+        .detail-header { background: var(--bg-dark); color: white; padding: 15px; display: flex; align-items: center; position: sticky; top: 0; }
+        .back-btn { background: none; border: none; color: white; font-size: 20px; margin-right: 10px; cursor: pointer; }
+        .detail-title { font-size: 18px; font-weight: bold; }
+        .detail-content { padding: 15px; background: white; margin-bottom: 10px; }
+        .detail-title-main { font-size: 20px; margin-bottom: 20px; }
+        .badge-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+        .badge { border: 1px solid var(--primary); color: var(--primary); padding: 6px 16px; border-radius: 6px; display: flex; align-items: center; gap: 4px; }
+        .notice-box { background: #E0F2F1; color: #00695C; padding: 12px; border-radius: 8px; margin-bottom: 20px; }
+        .section-title { font-size: 16px; font-weight: bold; margin-bottom: 12px; border-left: 4px solid var(--primary); padding-left: 8px; }
+        .detail-text { line-height: 1.8; color: var(--text-light); }
+
+        /* 底部导航 */
+        .footer-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; display: flex; border-top: 1px solid #E0E0E0; z-index: 99; }
+        .nav-item { flex: 1; padding: 10px; text-align: center; color: var(--text-light); cursor: pointer; }
+        .nav-item.active { color: var(--primary); }
+        .nav-icon { font-size: 22px; margin-bottom: 4px; }
+        .nav-text { font-size: 12px; }
+
+        /* 弹窗 */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; align-items: flex-end; justify-content: center; z-index: 100; }
+        .modal-overlay.show { display: flex; }
+        .modal-box { background: white; width: 100%; max-width: 500px; border-radius: 20px 20px 0 0; padding: 20px; max-height: 85vh; overflow-y: auto; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .modal-title { font-size: 18px; font-weight: bold; }
+        .close-btn { background: none; border: none; font-size: 22px; cursor: pointer; color: var(--text-light); }
+        .order-header { display: flex; gap: 12px; margin-bottom: 20px; }
+        .order-img { width: 80px; height: 80px; border-radius: 8px; object-fit: cover; background: #F5F5F5; }
+        .order-info { flex: 1; }
+        .order-name { font-size: 16px; margin-bottom: 8px; }
+        .order-price { font-size: 22px; color: var(--red); font-weight: bold; }
+        .form-group { margin-bottom: 16px; }
+        .form-label { display: block; margin-bottom: 6px; color: var(--text-dark); }
+        .form-label span { color: var(--red); }
+        .form-input { width: 100%; padding: 12px; border: 1px solid #E0E0E0; border-radius: 8px; font-size: 15px; }
+        .quantity-wrap { display: flex; align-items: center; border: 1px solid #E0E0E0; border-radius: 8px; width: 120px; }
+        .qty-btn { width: 40px; height: 44px; border: none; background: #F5F5F5; font-size: 18px; cursor: pointer; }
+        .qty-input { flex: 1; border: none; text-align: center; font-size: 16px; }
+        .submit-btn { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; margin-top: 10px; }
+
+        /* 支付信息弹窗 */
+        .pay-info { text-align: center; padding: 20px 0; }
+        .pay-title { font-size: 18px; font-weight: bold; margin-bottom: 20px; color: var(--primary); }
+        .pay-address { background: #F5F5F5; padding: 15px; border-radius: 8px; line-height: 2; margin-bottom: 20px; word-break: break-all; }
+        .copy-btn { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 15px; }
+
+        /* 子页面 */
+        .page-content { padding: 15px; }
+        .page-section { background: white; border-radius: 10px; padding: 15px; margin-bottom: 15px; }
+        .page-section h3 { font-size: 16px; margin-bottom: 12px; border-bottom: 1px solid #EEE; padding-bottom: 8px; }
+        .faq-item { margin-bottom: 15px; }
+        .faq-q { font-weight: bold; margin-bottom: 6px; }
+        .faq-a { color: var(--text-light); line-height: 1.6; }
+        .contact-item { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid #F5F5F5; }
+        .contact-item a { color: var(--primary); text-decoration: none; }
+        .category-list { display: flex; flex-direction: column; gap: 10px; }
+        .category-list-item { background: #F5F5F5; padding: 15px; border-radius: 8px; cursor: pointer; font-size: 15px; }
     </style>
 </head>
 <body>
-    <!-- 顶部 -->
-    <header class="header">
-        <div class="header-content">
-            <h1 class="logo">💖 龚海军狗王纪念站</h1>
-            <div class="user-avatar">G</div>
-        </div>
-    </header>
 
-    <!-- 标签栏 -->
-    <div class="tab-bar">
-        <div class="tab active" onclick="switchTab(0)">首页</div>
-        <div class="tab" onclick="switchTab(1)">记录</div>
-        <div class="tab" onclick="switchTab(2)">统计</div>
-        <div class="tab" onclick="switchTab(3)">设置</div>
-    </div>
-
-    <!-- 首页 -->
-    <div id="page-0" class="page active">
-        <div class="card">
-            <h2 style="font-size: 18px; margin-bottom: 16px;">💕 我们的故事</h2>
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-value" id="days-count">365</div>
-                    <div class="stat-label">相处天数</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="records-count">28</div>
-                    <div class="stat-label">珍贵记录</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="words-count">5,200</div>
-                    <div class="stat-label">暖心话语</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="milestone">80%</div>
-                    <div class="stat-label">进度达成</div>
-                </div>
-            </div>
-            
-            <div style="margin-bottom: 16px;">
-                <div style="display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 4px;">
-                    <span>下一个目标：1000天</span>
-                    <span id="progress-text">80%</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progress-bar" style="width: 80%;"></div>
-                </div>
-            </div>
-            
-            <button class="btn" onclick="showAddModal()">+ 写下新的回忆</button>
-        </div>
-
-        <div class="card">
-            <h3 style="font-size: 16px; margin-bottom: 14px;">📝 最新记录</h3>
-            <div id="latest-records"></div>
+<!-- 首页 -->
+<div id="page-home" class="page active">
+    <div class="header">万兴海内外电话卡商城</div>
+    <div class="sub-header">
+        <h1>实名手机卡</h1>
+        <p>三网实名卡源·附带资料·掉实名可补换</p>
+        <div class="tags">
+            <span class="tag">顺丰包邮</span>
+            <span class="tag">18点统发</span>
+            <span class="tag">质保三月</span>
         </div>
     </div>
-
-    <!-- 记录页 -->
-    <div id="page-1" class="page">
-        <div style="display: flex; gap: 10px; margin-bottom: 16px;">
-            <input type="text" class="input" id="search-input" placeholder="搜索记录..." style="flex: 1; margin: 0;" oninput="filterRecords()">
-            <button class="btn" style="width: auto; padding: 0 16px;" onclick="showAddModal()">添加</button>
-        </div>
-        
-        <div id="all-records"></div>
+    <div class="banner">
+        <h2>輕鬆出遊 SIM遍全球</h2>
+        <p>覆盖全球超过50+国家/地区使用</p>
+    </div>
+    <div class="notice-bar">
+        <span>📢</span>
+        <span class="notice-text">【通知】顺丰包邮，18点统一发货</span>
     </div>
 
-    <!-- 统计页 -->
-    <div id="page-2" class="page">
-        <div class="card">
-            <h3 style="font-size: 16px; margin-bottom: 20px;">📊 数据统计</h3>
-            
-            <div style="margin-bottom: 20px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                    <span>总记录数</span>
-                    <span id="stat-total" style="font-weight: 600;">28 条</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                    <span>总字数</span>
-                    <span id="stat-words" style="font-weight: 600;">5,200 字</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                    <span>含图片记录</span>
-                    <span id="stat-images" style="font-weight: 600;">12 条</span>
-                </div>
-                <div style="display: flex; justify-content: space-between;">
-                    <span>月均记录</span>
-                    <span id="stat-monthly" style="font-weight: 600;">2.3 条</span>
-                </div>
-            </div>
-        </div>
+    <!-- 三网手机卡 -->
+    <div class="category-title">三网手机卡</div>
+    <div class="goods-grid" id="grid-1"></div>
 
-        <div class="card">
-            <h3 style="font-size: 16px; margin-bottom: 16px;">🏷️ 标签分布</h3>
-            <div id="tag-stats"></div>
-        </div>
+    <!-- 国内实名电话卡 -->
+    <div class="category-title">国内实名电话卡</div>
+    <div class="goods-grid" id="grid-2"></div>
 
-        <div class="card">
-            <h3 style="font-size: 16px; margin-bottom: 16px;">📅 月度趋势</h3>
-            <div id="monthly-trend"></div>
+    <!-- 亚洲流量卡 -->
+    <div class="category-title">亚洲流量卡</div>
+    <div class="goods-grid" id="grid-3"></div>
+</div>
+
+<!-- 商品详情页 -->
+<div id="page-detail" class="page">
+    <div class="detail-header">
+        <button class="back-btn" onclick="switchPage('home')">←</button>
+        <h1 class="detail-title">商品详情</h1>
+    </div>
+    <div class="detail-content">
+        <h2 class="detail-title-main" id="detailName"></h2>
+        <div class="badge-row">
+            <span class="badge">✓ 正品保证</span>
+            <span class="badge">✓ 官方货源</span>
+            <span class="badge">✓ 信誉保证</span>
+            <span class="badge">✓ 全网最低价</span>
+        </div>
+        <div class="notice-box">【通知】顺丰包邮，18点统一发货·掉实名可补换</div>
+        <h3 class="section-title">商品详情</h3>
+        <p class="detail-text" id="detailDesc">
+            三网实名手机卡，附带全套资料，实名可查可验。顺丰包邮，18点统一发货，质保三个月，掉实名可免费补换。
+        </p>
+    </div>
+    <div style="padding:15px; position:fixed; bottom:60px; left:0; right:0; background:white; border-top:1px solid #EEE;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:22px; color:var(--red); font-weight:bold;" id="detailPrice"></span>
+            <button class="buy-btn" style="padding:10px 30px; font-size:16px;" onclick="openOrderModal()">立即购买</button>
         </div>
     </div>
+</div>
 
-    <!-- 设置页 -->
-    <div id="page-3" class="page">
-        <div class="card">
-            <h3 style="font-size: 16px; margin-bottom: 16px;">⚙️ 基础设置</h3>
-            
-            <div class="record-item" style="cursor: pointer;" onclick="checkAuthAndDo(() => showSettingModal('name'))">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span>站点名称</span>
-                    <span style="color: var(--text-light);">龚海军狗王纪念站 ›</span>
-                </div>
-            </div>
-            
-            <div class="record-item" style="cursor: pointer;" onclick="checkAuthAndDo(() => showSettingModal('date'))">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span>起始日期</span>
-                    <span style="color: var(--text-light);">2025-01-01 ›</span>
-                </div>
-            </div>
-            
-            <div class="record-item" style="cursor: pointer;" onclick="checkAuthAndDo(() => showSettingModal('goal'))">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span>目标天数</span>
-                    <span style="color: var(--text-light);">1000 天 ›</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <h3 style="font-size: 16px; margin-bottom: 16px;">🛡️ 数据管理</h3>
-            
-            <button class="btn btn-outline" style="margin-bottom: 12px;" onclick="exportData()">导出数据</button>
-            <button class="btn btn-outline" style="color: #DC2626; border-color: #DC2626;" onclick="checkAuthAndDo(clearAllData)">清空所有数据</button>
+<!-- 全部分类页 -->
+<div id="page-category" class="page">
+    <div class="header">全部分类</div>
+    <div class="page-content">
+        <div class="category-list">
+            <div class="category-list-item" onclick="scrollToCategory('grid-1')">📱 三网手机卡</div>
+            <div class="category-list-item" onclick="scrollToCategory('grid-2')">📞 国内实名电话卡</div>
+            <div class="category-list-item" onclick="scrollToCategory('grid-3')">🌏 亚洲流量卡</div>
         </div>
     </div>
+</div>
 
-    <!-- 底部导航 -->
-    <div class="footer-nav">
-        <div class="nav-item active" onclick="switchTab(0)">
-            <div class="nav-icon">🏠</div>
-            <div>首页</div>
+<!-- 联系客服页 -->
+<div id="page-contact" class="page">
+    <div class="header">联系客服</div>
+    <div class="page-content">
+        <div class="page-section">
+            <h3>客服信息</h3>
+            <div class="contact-item">
+                <span>📱</span>
+                <span>TG: <a href="https://t.me/wxch03" target="_blank">https://t.me/wxch03</a></span>
+            </div>
+            <div class="contact-item">
+                <span>⏰</span>
+                <span>服务时间：9:00 - 23:00</span>
+            </div>
         </div>
-        <div class="nav-item" onclick="switchTab(1)">
-            <div class="nav-icon">📝</div>
-            <div>记录</div>
-        </div>
-        <div class="nav-item" onclick="switchTab(2)">
-            <div class="nav-icon">📊</div>
-            <div>统计</div>
-        </div>
-        <div class="nav-item" onclick="switchTab(3)">
-            <div class="nav-icon">⚙️</div>
-            <div>设置</div>
+        <div class="page-section">
+            <h3>购买须知</h3>
+            <p style="line-height:1.8; color:var(--text-light);">
+                1. 下单后请及时联系客服核实订单<br>
+                2. 发货时间为每日18点，发货后提供快递单号<br>
+                3. 收货请核验身份信息，确认无误后签收<br>
+                4. 如有质量问题请3天内联系客服退换
+            </p>
         </div>
     </div>
+</div>
 
-    <!-- 密码验证弹窗 -->
-    <div id="password-modal" class="modal">
-        <div class="modal-content">
-            <h3 class="modal-title">🔐 权限验证</h3>
-            <p style="text-align: center; margin-bottom: 16px; color: var(--text-light);">请输入编辑密码以继续操作</p>
-            
-            <div class="input-group">
-                <input type="password" class="input" id="password-input" placeholder="请输入密码">
+<!-- 常见问题页 -->
+<div id="page-faq" class="page">
+    <div class="header">常见问题</div>
+    <div class="page-content">
+        <div class="page-section">
+            <div class="faq-item">
+                <div class="faq-q">Q：购买后多久发货？</div>
+                <div class="faq-a">A：每日18点统一发货，顺丰包邮。</div>
             </div>
-            
-            <div id="password-error" class="error-text">密码错误，请重试</div>
-            
-            <div class="modal-buttons">
-                <button class="btn btn-outline" onclick="hidePasswordModal()">取消</button>
-                <button class="btn" onclick="verifyPassword()">确认</button>
+            <div class="faq-item">
+                <div class="faq-q">Q：掉实名可以补换吗？</div>
+                <div class="faq-a">A：质保三个月，期间掉实名可免费补换。</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">Q：支持哪些支付方式？</div>
+                <div class="faq-a">A：支持USDT(TRC20)转账，下单后获取支付地址。</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">Q：可以退换货吗？</div>
+                <div class="faq-a">A：收到货如有质量问题3天内可申请退换。</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">Q：如何查询物流？</div>
+                <div class="faq-a">A：发货后客服会提供顺丰快递单号，可在官网查询。</div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- 添加/编辑弹窗 -->
-    <div id="add-modal" class="modal">
-        <div class="modal-content">
-            <h3 class="modal-title" id="modal-title">添加新记录</h3>
-            
-            <div class="input-group">
-                <label style="display: block; margin-bottom: 6px; font-weight: 500;">标签</label>
-                <input type="text" class="input" id="record-tags" placeholder="用空格分隔，如：约会 惊喜 日常">
-            </div>
-            
-            <div class="input-group">
-                <label style="display: block; margin-bottom: 6px; font-weight: 500;">内容</label>
-                <textarea class="input textarea" id="record-content" placeholder="写下想说的话..."></textarea>
-            </div>
-            
-            <div class="input-group">
-                <label style="display: block; margin-bottom: 6px; font-weight: 500;">上传图片</label>
-                <input type="file" id="record-image" accept="image/*" onchange="previewImage(event)" style="margin-bottom: 10px;">
-                <div id="image-preview" style="display: none; margin-bottom: 10px;">
-                    <img id="preview-img" style="max-width: 100%; border-radius: 8px;">
-                </div>
-            </div>
-            
-            <div class="modal-buttons">
-                <button class="btn btn-outline" onclick="hideAddModal()">取消</button>
-                <button class="btn" onclick="saveRecord()">保存</button>
+<!-- 下单弹窗 -->
+<div id="orderModal" class="modal-overlay">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3 class="modal-title">确认订单</h3>
+            <button class="close-btn" onclick="closeOrderModal()">×</button>
+        </div>
+        <div class="order-header">
+            <div class="order-img" id="orderImg"></div>
+            <div class="order-info">
+                <div class="order-name" id="orderName"></div>
+                <div class="order-price" id="orderPrice"></div>
             </div>
         </div>
-    </div>
-
-    <!-- 设置弹窗 -->
-    <div id="setting-modal" class="modal">
-        <div class="modal-content">
-            <h3 class="modal-title" id="setting-modal-title">设置</h3>
-            
-            <div id="setting-modal-body"></div>
-            
-            <div class="modal-buttons">
-                <button class="btn btn-outline" onclick="hideSettingModal()">取消</button>
-                <button class="btn" onclick="saveSetting()">保存</button>
+        <div class="form-group">
+            <label class="form-label">联系手机 <span>*</span></label>
+            <input type="tel" class="form-input" placeholder="填写你的联系手机" id="phone">
+        </div>
+        <div class="form-group">
+            <label class="form-label">收货人 <span>*</span></label>
+            <input type="text" class="form-input" placeholder="名字" id="receiver">
+        </div>
+        <div class="form-group">
+            <label class="form-label">所在区 <span>*</span></label>
+            <input type="text" class="form-input" placeholder="省、市、区、街道" id="region">
+        </div>
+        <div class="form-group">
+            <label class="form-label">详细地址 <span>*</span></label>
+            <input type="text" class="form-input" placeholder="小区楼栋/乡村名称" id="address">
+        </div>
+        <div class="form-group">
+            <label class="form-label">数量</label>
+            <div class="quantity-wrap">
+                <button class="qty-btn" onclick="changeQty(-1)">-</button>
+                <input type="number" class="qty-input" value="1" id="qty" min="1">
+                <button class="qty-btn" onclick="changeQty(1)">+</button>
             </div>
         </div>
+        <button class="submit-btn" onclick="submitOrder()">确定</button>
     </div>
+</div>
 
-    <!-- 删除确认弹窗 -->
-    <div id="delete-modal" class="modal">
-        <div class="modal-content">
-            <h3 class="modal-title">确认删除</h3>
-            <p style="text-align: center; margin-bottom: 20px;">确定要删除这条记录吗？此操作不可恢复。</p>
-            <div class="modal-buttons">
-                <button class="btn btn-outline" onclick="hideDeleteModal()">取消</button>
-                <button class="btn" style="background: linear-gradient(135deg, #DC2626, #B91C1C);" onclick="confirmDelete()">确认删除</button>
+<!-- 支付信息弹窗 -->
+<div id="payModal" class="modal-overlay">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3 class="modal-title">支付信息</h3>
+            <button class="close-btn" onclick="closePayModal()">×</button>
+        </div>
+        <div class="pay-info">
+            <div class="pay-title">请向以下地址支付</div>
+            <div class="pay-address" id="payAddress">
+                币种：USDT(TRC20)<br>
+                地址：TV2TuxxvGgzD2tQ8C6VDpqa7yMvn8AAmcK<br>
+                金额：<span id="payAmount">0.00</span> USDT
             </div>
+            <button class="copy-btn" onclick="copyAddress()">复制地址</button>
         </div>
     </div>
+</div>
 
-    <script>
-        // ==================== 配置与权限 ====================
-        const EDIT_PASSWORD = "wxcf888";
-        let isAuthenticated = false;
-        let pendingAction = null;
+<!-- 底部导航 -->
+<div class="footer-nav">
+    <div class="nav-item active" data-page="home">
+        <div class="nav-icon">🏠</div>
+        <div class="nav-text">首页</div>
+    </div>
+    <div class="nav-item" data-page="category">
+        <div class="nav-icon">☰</div>
+        <div class="nav-text">全部分类</div>
+    </div>
+    <div class="nav-item" data-page="contact">
+        <div class="nav-icon">👤</div>
+        <div class="nav-text">联系客服</div>
+    </div>
+    <div class="nav-item" data-page="faq">
+        <div class="nav-icon">❓</div>
+        <div class="nav-text">常见问题</div>
+    </div>
+</div>
 
-        // ==================== 数据管理 ====================
-        let records = [];
-        let settings = {
-            name: "龚海军狗王纪念站",
-            startDate: "2025-01-01",
-            goalDays: 1000
-        };
-        let editingId = null;
-        let deletingId = null;
-        let currentSettingType = null;
-        let tempImageData = null;
+<script>
+// 商品数据 - 一比一来自截图
+const goodsData = {
+    cat1: [ // 三网手机卡
+        { id:1, name:'中国移动电话卡', price:50.00, stock:102, sold:3977, icon:'📱' },
+        { id:2, name:'中国联通电话卡', price:55.00, stock:98, sold:3567, icon:'📞' },
+        { id:3, name:'中国电信电话卡', price:55.00, stock:189, sold:3102, icon:'📲' }
+    ],
+    cat2: [ // 国内实名电话卡
+        { id:4, name:'三五电销卡-不封号手机卡-1200分钟', price:25.00, stock:255, sold:512, icon:'📞' },
+        { id:5, name:'三五电销卡-不封号手机卡-2000分钟', price:37.50, stock:231, sold:579, icon:'📞' },
+        { id:6, name:'165号段注册卡-0月租电话卡', price:20.00, stock:568, sold:422, icon:'📱' },
+        { id:7, name:'167号段注册卡-0月租电话卡', price:20.00, stock:178, sold:546, icon:'📱' },
+        { id:8, name:'170号段注册卡-0月租电话卡', price:20.00, stock:456, sold:741, icon:'📱' },
+        { id:9, name:'171号段注册卡-0月租电话卡', price:20.00, stock:547, sold:871, icon:'📱' },
+        { id:10, name:'162号段注册卡-0月租电话卡', price:20.00, stock:467, sold:548, icon:'📱' },
+        { id:11, name:'三五电销卡-不封号手机卡-4000分钟', price:55.00, stock:125, sold:612, icon:'📞' }
+    ],
+    cat3: [ // 亚洲流量卡
+        { id:12, name:'韩国日本通用30天无限流量卡', price:59.50, stock:567, sold:214, icon:'🌏' },
+        { id:13, name:'日本docomo/KDD流量卡', price:32.00, stock:225, sold:671, icon:'🇯🇵' },
+        { id:14, name:'日本docomo/KDD流量卡', price:42.00, stock:566, sold:771, icon:'🇯🇵' },
+        { id:15, name:'日本docomo/KDD流量卡', price:72.00, stock:225, sold:352, icon:'🇯🇵' },
+        { id:16, name:'台湾无限上网卡-使用30天', price:49.50, stock:241, sold:146, icon:'🇹🇼' },
+        { id:17, name:'台湾无限上网卡-使用10天', price:32.75, stock:336, sold:251, icon:'🇹🇼' },
+        { id:18, name:'台湾无限上网卡-使用15天', price:29.50, stock:125, sold:123, icon:'🇹🇼' },
+        { id:19, name:'香港鸭聊佳120余额', price:27.50, stock:661, sold:559, icon:'🇭🇰' },
+        { id:20, name:'香港鸭聊佳48余额', price:10.00, stock:664, sold:459, icon:'🇭🇰' }
+    ]
+};
 
-        // 初始化默认数据
-        function initData() {
-            const savedRecords = localStorage.getItem('ghj_records');
-            const savedSettings = localStorage.getItem('ghj_settings');
-            
-            if (savedRecords) {
-                records = JSON.parse(savedRecords);
-            } else {
-                records = [
-                    {
-                        id: 1,
-                        date: "2026-08-15",
-                        tags: ["相遇", "纪念"],
-                        content: "不知不觉已经一起走过这么多天了，每一个瞬间都值得珍藏。",
-                        image: null,
-                        words: 28
-                    },
-                    {
-                        id: 2,
-                        date: "2026-08-10",
-                        tags: ["约会", "开心"],
-                        content: "今天一起去看了电影，吃了好吃的，和你在一起的每一刻都那么美好。",
-                        image: null,
-                        words: 36
-                    }
-                ];
-            }
-            
-            if (savedSettings) {
-                settings = JSON.parse(savedSettings);
-            }
-            
-            calculateStats();
-            renderAll();
-        }
+let allGoods = [...goodsData.cat1, ...goodsData.cat2, ...goodsData.cat3];
+let currentGoods = null;
+const PAY_ADDRESS = 'TV2TuxxvGgzD2tQ8C6VDpqa7yMvn8AAmcK';
 
-        function saveRecords() {
-            localStorage.setItem('ghj_records', JSON.stringify(records));
-            calculateStats();
-            renderAll();
-        }
+// 渲染商品
+function renderGoods() {
+    renderGrid('grid-1', goodsData.cat1);
+    renderGrid('grid-2', goodsData.cat2);
+    renderGrid('grid-3', goodsData.cat3);
+}
 
-        function saveSettings() {
-            localStorage.setItem('ghj_settings', JSON.stringify(settings));
-            calculateStats();
-            renderAll();
-        }
-
-        // ==================== 计算逻辑 ====================
-        let stats = {};
-
-        function calculateStats() {
-            const start = new Date(settings.startDate);
-            const today = new Date();
-            const days = Math.ceil((today - start) / (1000 * 60 * 60 * 24)) + 1;
-            
-            const totalWords = records.reduce((sum, r) => sum + r.words, 0);
-            const imageCount = records.filter(r => r.image).length;
-            const progress = Math.min(100, Math.round((days / settings.goalDays) * 100));
-            
-            const tagCount = {};
-            records.forEach(r => {
-                r.tags.forEach(tag => {
-                    tagCount[tag] = (tagCount[tag] || 0) + 1;
-                });
-            });
-            
-            const monthCount = {};
-            records.forEach(r => {
-                const month = r.date.substring(0, 7);
-                monthCount[month] = (monthCount[month] || 0) + 1;
-            });
-            
-            stats = {
-                days,
-                totalRecords: records.length,
-                totalWords,
-                imageCount,
-                progress,
-                tagCount,
-                monthCount,
-                monthlyAvg: (records.length / Math.max(1, (days / 30))).toFixed(1)
-            };
-        }
-
-        // ==================== 渲染 ====================
-        function renderAll() {
-            renderHome();
-            renderRecords();
-            renderStats();
-        }
-
-        function renderHome() {
-            document.getElementById('days-count').textContent = stats.days;
-            document.getElementById('records-count').textContent = stats.totalRecords;
-            document.getElementById('words-count').textContent = stats.totalWords.toLocaleString();
-            document.getElementById('milestone').textContent = stats.progress + '%';
-            document.getElementById('progress-text').textContent = stats.progress + '%';
-            document.getElementById('progress-bar').style.width = stats.progress + '%';
-            
-            const latest = records.slice(-3).reverse();
-            const container = document.getElementById('latest-records');
-            
-            if (latest.length === 0) {
-                container.innerHTML = `<div class="empty-state"><div class="empty-icon">📝</div><div>还没有记录，写下第一条吧~</div></div>`;
-                return;
-            }
-            
-            container.innerHTML = latest.map(r => `
-                <div class="record-item" style="margin-bottom: 10px;">
-                    <div class="record-date">${r.date}</div>
-                    <div>${r.content.substring(0, 30)}${r.content.length > 30 ? '...' : ''}</div>
+function renderGrid(gridId, list) {
+    const container = document.getElementById(gridId);
+    container.innerHTML = list.map(item => `
+        <div class="goods-card" onclick="openDetail(${item.id})">
+            <div class="goods-img">${item.icon}</div>
+            <div class="goods-info">
+                <div class="goods-name">${item.name}</div>
+                <div class="goods-meta">
+                    <span class="stock">库存:${item.stock}</span>
+                    <span class="sold">销量:${item.sold}</span>
                 </div>
-            `).join('');
-        }
-
-        function renderRecords(filter = '') {
-            const container = document.getElementById('all-records');
-            let filtered = records;
-            
-            if (filter) {
-                const keyword = filter.toLowerCase();
-                filtered = records.filter(r => 
-                    r.content.toLowerCase().includes(keyword) ||
-                    r.tags.some(t => t.toLowerCase().includes(keyword))
-                );
-            }
-            
-            if (filtered.length === 0) {
-                container.innerHTML = `<div class="empty-state"><div class="empty-icon">🔍</div><div>没有找到相关记录</div></div>`;
-                return;
-            }
-            
-            container.innerHTML = filtered.slice().reverse().map(r => `
-                <div class="record-item">
-                    <div class="record-date">${r.date}</div>
-                    <div>${r.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
-                    <div class="record-content">${r.content}</div>
-                    ${r.image ? `<img src="${r.image}" class="record-image">` : ''}
-                    <div class="record-actions">
-                        <button class="action-btn btn-edit" onclick="checkAuthAndDo(() => editRecord(${r.id}))">编辑</button>
-                        <button class="action-btn btn-delete" onclick="checkAuthAndDo(() => showDeleteModal(${r.id}))">删除</button>
-                    </div>
+                <div class="goods-bottom">
+                    <span class="price">${item.price.toFixed(2)} USDT</span>
+                    <button class="buy-btn" onclick="event.stopPropagation(); openDetail(${item.id});">购买</button>
                 </div>
-            `).join('');
-        }
+            </div>
+        </div>
+    `).join('');
+}
 
-        function renderStats() {
-            document.getElementById('stat-total').textContent = stats.totalRecords + ' 条';
-            document.getElementById('stat-words').textContent = stats.totalWords.toLocaleString() + ' 字';
-            document.getElementById('stat-images').textContent = stats.imageCount + ' 条';
-            document.getElementById('stat-monthly').textContent = stats.monthlyAvg + ' 条';
-            
-            const tagContainer = document.getElementById('tag-stats');
-            const sortedTags = Object.entries(stats.tagCount).sort((a, b) => b[1] - a[1]);
-            
-            if (sortedTags.length === 0) {
-                tagContainer.innerHTML = '<div style="color: var(--text-light);">暂无标签数据</div>';
-            } else {
-                tagContainer.innerHTML = sortedTags.map(([tag, count]) => `
-                    <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #F3E5F5;">
-                        <span>${tag}</span>
-                        <span style="font-weight: 600; color: var(--primary);">${count} 次</span>
-                    </div>
-                `).join('');
-            }
-            
-            const monthContainer = document.getElementById('monthly-trend');
-            const sortedMonths = Object.entries(stats.monthCount).sort((a, b) => a[0].localeCompare(b[0]));
-            
-            if (sortedMonths.length === 0) {
-                monthContainer.innerHTML = '<div style="color: var(--text-light);">暂无月度数据</div>';
-            } else {
-                monthContainer.innerHTML = sortedMonths.map(([month, count]) => `
-                    <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #F3E5F5;">
-                        <span>${month}</span>
-                        <span style="font-weight: 600;">${count} 条</span>
-                    </div>
-                `).join('');
-            }
-        }
+// 切换页面
+function switchPage(pageName) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(`page-${pageName}`).classList.add('active');
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => {
+        if(n.dataset.page === pageName) n.classList.add('active');
+    });
+    window.scrollTo(0,0);
+}
 
-        // ==================== 权限验证 ====================
-        function checkAuthAndDo(action) {
-            if (isAuthenticated) {
-                action();
-            } else {
-                pendingAction = action;
-                showPasswordModal();
-            }
-        }
+// 滚动到分类
+function scrollToCategory(gridId) {
+    switchPage('home');
+    setTimeout(() => {
+        document.getElementById(gridId).scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+}
 
-        function showPasswordModal() {
-            document.getElementById('password-input').value = '';
-            document.getElementById('password-error').style.display = 'none';
-            document.getElementById('password-modal').style.display = 'flex';
-        }
+// 打开商品详情
+function openDetail(id) {
+    currentGoods = allGoods.find(g => g.id === id);
+    document.getElementById('detailName').textContent = currentGoods.name;
+    document.getElementById('detailPrice').textContent = `${currentGoods.price.toFixed(2)} USDT`;
+    switchPage('detail');
+}
 
-        function hidePasswordModal() {
-            document.getElementById('password-modal').style.display = 'none';
-            pendingAction = null;
-        }
+// 打开下单弹窗
+function openOrderModal() {
+    document.getElementById('orderName').textContent = currentGoods.name;
+    document.getElementById('orderPrice').textContent = `${currentGoods.price.toFixed(2)} USDT`;
+    document.getElementById('orderImg').innerHTML = `<div style="font-size:32px;">${currentGoods.icon}</div>`;
+    document.getElementById('qty').value = 1;
+    document.getElementById('orderModal').classList.add('show');
+}
 
-        function verifyPassword() {
-            const input = document.getElementById('password-input').value;
-            if (input === EDIT_PASSWORD) {
-                isAuthenticated = true;
-                hidePasswordModal();
-                if (pendingAction) {
-                    pendingAction();
-                    pendingAction = null;
-                }
-            } else {
-                document.getElementById('password-error').style.display = 'block';
-            }
-        }
+// 关闭下单弹窗
+function closeOrderModal() {
+    document.getElementById('orderModal').classList.remove('show');
+}
 
-        // ==================== 交互操作 ====================
-        function switchTab(index) {
-            document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-            document.getElementById(`page-${index}`).classList.add("active");
-            
-            document.querySelectorAll(".tab").forEach((t, i) => t.classList.toggle("active", i === index));
-            document.querySelectorAll(".nav-item").forEach((n, i) => n.classList.toggle("active", i === index));
-        }
+// 数量增减
+function changeQty(delta) {
+    const input = document.getElementById('qty');
+    let val = parseInt(input.value) + delta;
+    if(val < 1) val = 1;
+    input.value = val;
+}
 
-        function showAddModal() {
-            editingId = null;
-            tempImageData = null;
-            document.getElementById('modal-title').textContent = '添加新记录';
-            document.getElementById('record-tags').value = '';
-            document.getElementById('record-content').value = '';
-            document.getElementById('image-preview').style.display = 'none';
-            document.getElementById('add-modal').style.display = 'flex';
-        }
+// 提交订单
+function submitOrder() {
+    const phone = document.getElementById('phone').value.trim();
+    const receiver = document.getElementById('receiver').value.trim();
+    const region = document.getElementById('region').value.trim();
+    const address = document.getElementById('address').value.trim();
+    const qty = parseInt(document.getElementById('qty').value);
+    
+    if(!phone || !receiver || !region || !address) {
+        alert('请填写所有必填项');
+        return;
+    }
+    
+    const totalPrice = (currentGoods.price * qty).toFixed(2);
+    document.getElementById('payAmount').textContent = totalPrice;
+    closeOrderModal();
+    document.getElementById('payModal').classList.add('show');
+}
 
-        function hideAddModal() {
-            document.getElementById('add-modal').style.display = 'none';
-            editingId = null;
-            tempImageData = null;
-        }
+// 关闭支付弹窗
+function closePayModal() {
+    document.getElementById('payModal').classList.remove('show');
+}
 
-        function editRecord(id) {
-            const record = records.find(r => r.id === id);
-            if (!record) return;
-            
-            editingId = id;
-            tempImageData = record.image;
-            document.getElementById('modal-title').textContent = '编辑记录';
-            document.getElementById('record-tags').value = record.tags.join(' ');
-            document.getElementById('record-content').value = record.content;
-            
-            if (record.image) {
-                document.getElementById('preview-img').src = record.image;
-                document.getElementById('image-preview').style.display = 'block';
-            } else {
-                document.getElementById('image-preview').style.display = 'none';
-            }
-            
-            document.getElementById('add-modal').style.display = 'flex';
-        }
+// 复制地址
+function copyAddress() {
+    navigator.clipboard.writeText(PAY_ADDRESS).then(() => {
+        alert('地址已复制');
+    }).catch(() => {
+        alert('复制失败，请手动复制');
+    });
+}
 
-        function saveRecord() {
-            const tagsInput = document.getElementById('record-tags').value.trim();
-            const content = document.getElementById('record-content').value.trim();
-            
-            if (!content) {
-                alert('请输入内容');
-                return;
-            }
-            
-            const tags = tagsInput ? tagsInput.split(/\s+/).filter(t => t) : ['日常'];
-            const words = content.length;
-            
-            if (editingId) {
-                const index = records.findIndex(r => r.id === editingId);
-                if (index !== -1) {
-                    records[index] = {
-                        ...records[index],
-                        tags,
-                        content,
-                        words,
-                        image: tempImageData
-                    };
-                }
-            } else {
-                const newRecord = {
-                    id: Date.now(),
-                    date: new Date().toISOString().substring(0, 10),
-                    tags,
-                    content,
-                    words,
-                    image: tempImageData
-                };
-                records.push(newRecord);
-            }
-            
-            saveRecords();
-            hideAddModal();
-        }
+// 底部导航点击
+document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+        switchPage(item.dataset.page);
+    });
+});
 
-        function showDeleteModal(id) {
-            deletingId = id;
-            document.getElementById('delete-modal').style.display = 'flex';
-        }
-
-        function hideDeleteModal() {
-            document.getElementById('delete-modal').style.display = 'none';
-            deletingId = null;
-        }
-
-        function confirmDelete() {
-            records = records.filter(r => r.id !== deletingId);
-            saveRecords();
-            hideDeleteModal();
-        }
-
-        function previewImage(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                tempImageData = e.target.result;
-                document.getElementById('preview-img').src = tempImageData;
-                document.getElementById('image-preview').style.display = 'block';
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function filterRecords() {
-            const keyword = document.getElementById('search-input').value;
-            renderRecords(keyword);
-        }
-
-        // 设置相关
-        function showSettingModal(type) {
-            currentSettingType = type;
-            let title = '', body = '';
-            
-            switch(type) {
-                case 'name':
-                    title = '站点名称设置';
-                    body = `<input type="text" class="input" id="setting-input" value="${settings.name}">`;
-                    break;
-                case 'date':
-                    title = '起始日期';
-                    body = `<input type="date" class="input" id="setting-input" value="${settings.startDate}">`;
-                    break;
-                case 'goal':
-                    title = '目标天数';
-                    body = `<input type="number" class="input" id="setting-input" value="${settings.goalDays}">`;
-                    break;
-            }
-            
-            document.getElementById('setting-modal-title').textContent = title;
-            document.getElementById('setting-modal-body').innerHTML = body;
-            document.getElementById('setting-modal').style.display = 'flex';
-        }
-
-        function hideSettingModal() {
-            document.getElementById('setting-modal').style.display = 'none';
-            currentSettingType = null;
-        }
-
-        function saveSetting() {
-            const value = document.getElementById('setting-input').value;
-            
-            switch(currentSettingType) {
-                case 'name':
-                    settings.name = value;
-                    break;
-                case 'date':
-                    settings.startDate = value;
-                    break;
-                case 'goal':
-                    settings.goalDays = parseInt(value) || 1000;
-                    break;
-            }
-            
-            saveSettings();
-            hideSettingModal();
-        }
-
-        function exportData() {
-            const data = { settings, records, stats };
-            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `${settings.name}_${new Date().toISOString().substring(0, 10)}.json`;
-            a.click();
-            URL.revokeObjectURL(url);
-            alert('数据导出成功！');
-        }
-
-        function clearAllData() {
-            if (confirm('确定要清空所有数据吗？此操作不可恢复！')) {
-                localStorage.removeItem('ghj_records');
-                localStorage.removeItem('ghj_settings');
-                records = [];
-                settings = { name: "龚海军狗王纪念站", startDate: "2025-01-01", goalDays: 1000 };
-                isAuthenticated = false;
-                calculateStats();
-                renderAll();
-                alert('数据已清空');
-            }
-        }
-
-        // 初始化
-        window.onload = initData;
-    </script>
+// 初始化
+renderGoods();
+</script>
 </body>
 </html>
