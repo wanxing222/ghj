@@ -103,11 +103,20 @@
         .qty-input { flex: 1; border: none; text-align: center; font-size: 16px; }
         .submit-btn { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; margin-top: 10px; }
 
+        /* 支付方式选择 */
+        .pay-method-box { display: flex; gap: 10px; margin-bottom: 20px; }
+        .pay-method-item { flex: 1; padding: 12px; border: 2px solid #E0E0E0; border-radius: 8px; text-align: center; cursor: pointer; transition: all 0.2s; font-size: 15px; font-weight: bold; color: #666; }
+        .pay-method-item.active.alipay { border-color: #1677FF; background: #E6F4FF; color: #1677FF; }
+        .pay-method-item.active.usdt { border-color: var(--primary); background: #E0F2F1; color: var(--primary); }
+
         /* 支付信息弹窗 */
-        .pay-info { text-align: center; padding: 20px 0; }
-        .pay-title { font-size: 18px; font-weight: bold; margin-bottom: 20px; color: var(--primary); }
-        .pay-address { background: #F5F5F5; padding: 15px; border-radius: 8px; line-height: 2; margin-bottom: 20px; word-break: break-all; }
-        .copy-btn { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 15px; }
+        .pay-info { text-align: center; padding: 10px 0; }
+        .pay-title { font-size: 18px; font-weight: bold; margin-bottom: 15px; color: var(--primary); }
+        .pay-address { background: #F5F5F5; padding: 15px; border-radius: 8px; line-height: 2; margin-bottom: 15px; word-break: break-all; text-align: left; }
+        .alipay-link-box { text-align: center; padding: 15px 0; }
+        .alipay-btn { display: inline-block; padding: 12px 30px; background: #1677FF; color: white; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: bold; }
+        .copy-btn { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 15px; width: 100%; }
+        .pay-tip { background: #FFF8E1; padding: 12px; border-radius: 8px; color: #E65100; font-size: 13px; line-height: 1.8; margin-top: 15px; text-align: left; }
 
         /* 子页面 */
         .page-content { padding: 15px; }
@@ -120,6 +129,7 @@
         .contact-item a { color: var(--primary); text-decoration: none; }
         .category-list { display: flex; flex-direction: column; gap: 10px; }
         .category-list-item { background: #F5F5F5; padding: 15px; border-radius: 8px; cursor: pointer; font-size: 15px; }
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
@@ -240,7 +250,7 @@
             </div>
             <div class="faq-item">
                 <div class="faq-q">Q：支持哪些支付方式？</div>
-                <div class="faq-a">A：支持USDT(TRC20)转账，下单后获取支付地址。</div>
+                <div class="faq-a">A：支持支付宝、USDT(TRC20)转账。</div>
             </div>
             <div class="faq-item">
                 <div class="faq-q">Q：可以退换货吗？</div>
@@ -282,7 +292,7 @@
         </div>
         <div class="form-group">
             <label class="form-label">详细地址 <span>*</span></label>
-            <input type="text" class="form-input" placeholder="小区楼栋/乡村名称" id="address">
+            <input  type="text" class="form-input" placeholder="小区楼栋/乡村名称" id="address">
         </div>
         <div class="form-group">
             <label class="form-label">数量</label>
@@ -300,17 +310,52 @@
 <div id="payModal" class="modal-overlay">
     <div class="modal-box">
         <div class="modal-header">
-            <h3 class="modal-title">支付信息</h3>
+            <h3 class="modal-title">选择支付方式</h3>
             <button class="close-btn" onclick="closePayModal()">×</button>
         </div>
-        <div class="pay-info">
-            <div class="pay-title">请向以下地址支付</div>
-            <div class="pay-address" id="payAddress">
-                币种：USDT(TRC20)<br>
-                地址：TV2TuxxvGgzD2tQ8C6VDpqa7yMvn8AAmcK<br>
-                金额：<span id="payAmount">0.00</span> USDT
+        
+        <!-- 支付方式选择 -->
+        <div class="pay-method-box">
+            <div class="pay-method-item active alipay" data-method="alipay" onclick="switchPayMethod('alipay')">
+                💰 支付宝
             </div>
-            <button class="copy-btn" onclick="copyAddress()">复制地址</button>
+            <div class="pay-method-item usdt" data-method="usdt" onclick="switchPayMethod('usdt')">
+                💎 USDT
+            </div>
+        </div>
+
+        <!-- 支付宝支付内容 -->
+        <div id="alipayContent" class="pay-info">
+            <div class="pay-title">支付金额：<span style="color:#1677FF;">￥<span id="payAmountCN">0.00</span></span></div>
+            <div class="alipay-link-box">
+                <a href="https://qr.alipay.com/fkx16193ubdgzfllkobdo53" target="_blank" class="alipay-btn">
+                    📱 打开支付宝付款
+                </a>
+            </div>
+            <div class="pay-tip">
+                ⚠️ 注意事项：<br>
+                1. 点击上方按钮，打开支付宝扫码付款<br>
+                2. 付款后请保存截图，联系客服发货<br>
+                3. 客服：<a href="https://t.me/wxch03" target="_blank" style="color:inherit; text-decoration:underline;">@wxch03</a>
+            </div>
+        </div>
+
+        <!-- USDT支付内容 -->
+        <div id="usdtContent" class="pay-info hidden">
+            <div class="pay-title">支付金额：<span style="color:var(--primary);"><span id="payAmountUSDT">0.00</span> USDT</span></div>
+            <div class="pay-address">
+                币种：USDT (TRC20 网络)<br>
+                地址：TV2TuxxvGgzD2tQ8C6VDpqa7yMvn8AAmcK<br>
+                金额：<span id="usdtAmount">0.00</span> USDT
+            </div>
+            <button class="copy-btn" onclick="copyAddress()">📋 复制地址与金额</button>
+            <div class="pay-tip">
+                ⚠️ 注意事项：<br>
+                1. 请务必使用 <strong>TRC20 网络</strong>转账，选错网络资产可能丢失！<br>
+                2. 请精确支付显示金额，不要多转或少转<br>
+                3. 转账后保存交易哈希，联系客服确认发货<br>
+                4. 客服：<a href="https://t.me/wxch03" target="_blank" style="color:inherit; text-decoration:underline;">@wxch03</a>
+            </div>
         </div>
     </div>
 </div>
@@ -336,6 +381,11 @@
 </div>
 
 <script>
+// 汇率配置
+const RATE = 7.25; // 1 USDT = 7.25 CNY
+const PAY_ADDRESS = 'TV2TuxxvGgzD2tQ8C6VDpqa7yMvn8AAmcK';
+const ALIPAY_URL = 'https://qr.alipay.com/fkx16193ubdgzfllkobdo53';
+
 // 商品数据 - 一比一来自截图
 const goodsData = {
     cat1: [ // 三网手机卡
@@ -368,7 +418,27 @@ const goodsData = {
 
 let allGoods = [...goodsData.cat1, ...goodsData.cat2, ...goodsData.cat3];
 let currentGoods = null;
-const PAY_ADDRESS = 'TV2TuxxvGgzD2tQ8C6VDpqa7yMvn8AAmcK';
+let currentPayMethod = 'alipay';
+let totalPriceCN = 0;
+let totalPriceUSDT = 0;
+
+// 切换支付方式
+function switchPayMethod(method) {
+    currentPayMethod = method;
+    document.querySelectorAll('.pay-method-item').forEach(el => {
+        el.classList.remove('active', 'alipay', 'usdt');
+        if (el.dataset.method === method) {
+            el.classList.add('active', method);
+        }
+    });
+    if (method === 'alipay') {
+        document.getElementById('alipayContent').classList.remove('hidden');
+        document.getElementById('usdtContent').classList.add('hidden');
+    } else {
+        document.getElementById('alipayContent').classList.add('hidden');
+        document.getElementById('usdtContent').classList.remove('hidden');
+    }
+}
 
 // 渲染商品
 function renderGoods() {
@@ -459,8 +529,18 @@ function submitOrder() {
         return;
     }
     
-    const totalPrice = (currentGoods.price * qty).toFixed(2);
-    document.getElementById('payAmount').textContent = totalPrice;
+    // 计算价格
+    totalPriceUSDT = (currentGoods.price * qty).toFixed(2);
+    totalPriceCN = (parseFloat(totalPriceUSDT) * RATE).toFixed(2);
+    
+    // 填充支付信息
+    document.getElementById('payAmountCN').textContent = totalPriceCN;
+    document.getElementById('payAmountUSDT').textContent = totalPriceUSDT;
+    document.getElementById('usdtAmount').textContent = totalPriceUSDT;
+    
+    // 默认选中支付宝
+    switchPayMethod('alipay');
+    
     closeOrderModal();
     document.getElementById('payModal').classList.add('show');
 }
@@ -472,10 +552,17 @@ function closePayModal() {
 
 // 复制地址
 function copyAddress() {
-    navigator.clipboard.writeText(PAY_ADDRESS).then(() => {
-        alert('地址已复制');
+    const text = `币种：USDT (TRC20 网络)\n地址：${PAY_ADDRESS}\n金额：${totalPriceUSDT} USDT`;
+    navigator.clipboard.writeText(text).then(() => {
+        alert('✅ 地址已复制到剪贴板！');
     }).catch(() => {
-        alert('复制失败，请手动复制');
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        alert('✅ 地址已复制到剪贴板！');
     });
 }
 
